@@ -5,6 +5,7 @@ import java.util.TreeMap;
 /**
  * <h2><b>訂單</b></h2>
  * order_id: 訂單ID<br>
+ * user_id: 用戶ID<br>
  * list: 訂單商品清單<br>
  * amount: 商品項目數量<br>
  * quantity: 商品總數量<br>
@@ -15,6 +16,8 @@ public class Order {
 
     // 訂單ID
     private String order_id;
+    // 用戶ID
+    private String user_id;
     // 訂單商品清單
     private TreeMap<String, GoodOrder> list;
     // 商品項目數量
@@ -35,8 +38,9 @@ public class Order {
      * @param quantity 商品總數量
      * @param total 訂單總金額
      */
-    public Order(String order_id, TreeMap<String, GoodOrder> list, int amount, int quantity, int total) {
+    public Order(String order_id, String user_id, TreeMap<String, GoodOrder> list, int amount, int quantity, int total) {
         this.order_id = order_id;
+        this.user_id = user_id;
         this.list = list;
         this.amount = amount;
         this.quantity = quantity;
@@ -69,6 +73,13 @@ public class Order {
      */
     public String getOrder_id() {
         return order_id;
+    }
+
+    /**
+     * @return 用戶ID
+     */
+    public String getUser_id() {
+        return user_id;
     }
 
     /**

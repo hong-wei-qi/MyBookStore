@@ -6,6 +6,7 @@ package element;
  * user_id: 用戶ID
  */
 public class User extends Cart {
+
     private String user_id;
 
     /**
@@ -31,5 +32,5 @@ public class User extends Cart {
     public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
-    
+
 }

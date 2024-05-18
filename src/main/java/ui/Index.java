@@ -2,18 +2,25 @@ package ui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import main.GlobalVariables;
 
 /**
- * <h2><b>主頁 UI介面</b></h2>
+ * <h2><b>主頁 UI介面</b></h2><br>
+ * header: 標頭 含有 { icon 二階分類選項 切換用戶 購物車 }<br>
+ * content: 內容<br>
+ * category1LBlock: 一階分類選項<br>
+ * indexGoodBlock: 商品清單 UI
  */
 public class Index {
 
@@ -22,10 +29,10 @@ public class Index {
 
     // 內容
     public HBox content = new HBox();
-    
+
     // 一階分類選項
     public VBox category1LBlock = new VBox();
-    
+
     // 商品清單 UI
     public ScrollPane indexGoodBlock = new ScrollPane();
 
@@ -82,7 +89,11 @@ public class Index {
             });
             category2L_Pane.getChildren().add(category2L_button);
         }
-        
+
+        // 填充中間空白部分
+        TilePane filling = new TilePane();
+        header.setHgrow(filling, Priority.ALWAYS);
+
         // 切換用戶
         ComboBox user_ChoiceBox = new ComboBox();
         for (String user_id : GlobalVariables.user_list.keySet()) {
@@ -92,20 +103,29 @@ public class Index {
             GlobalVariables.now_user = user_ChoiceBox.getSelectionModel().getSelectedItem().toString();
             // System.out.println(user_ChoiceBox.getSelectionModel().getSelectedItem());
         });
-        
-        // 購物車
-        
+        user_ChoiceBox.getSelectionModel().select(GlobalVariables.now_user);
 
-        header.getChildren().addAll(all_button, category2L_Pane, user_ChoiceBox);
+        // 購物車
+        Button goToCart = new Button();
+        goToCart.setText("購物車");
+        goToCart.setOnAction((e) -> {
+            GlobalUIObject.SelectAll_inCartList.setSelected(false);
+            GlobalUIObject.CART.setInCartList();
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            stage.setScene(GlobalUIObject.CartScene);
+            stage.show();
+        });
+
+        header.getChildren().addAll(all_button, category2L_Pane, filling, user_ChoiceBox, goToCart);
     }
-    
+
     /**
      * 建立 一階分類選項 無二階分類 存在(所有)
      */
     public void setCategory1LBlock() {
         this.category1LBlock.getChildren().clear();
     }
-    
+
     /**
      * 建立 一階分類選項 有二階分類 存在
      */

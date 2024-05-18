@@ -78,7 +78,7 @@ public class Cart {
     public void removeFromCart(String good_id) {
         this.cart.remove(good_id);
     }
-    
+
     /**
      * 檢查所有商品的數量，如果有商品數量為0則將該商品從<u>購物車</u>中移除
      */
@@ -87,7 +87,7 @@ public class Cart {
             this.checkGoodQuantity(good_id);
         }
     }
-    
+
     /**
      * 檢查特定商品的數量，如果該商品數量為0則將該商品從<u>購物車</u>中移除<br>
      * 前提是該商品存在於<u>購物車</u>
@@ -102,7 +102,7 @@ public class Cart {
             this.cart.remove(good_id);
         }
     }
-    
+
     /**
      * @return <u>購物車</u>中商品項目數量
      */
@@ -177,6 +177,7 @@ public class Cart {
             return;
         }
         cart.get(good_id).setQuantity(quantity);
+        checkGoodQuantity(good_id);
     }
 
     /**

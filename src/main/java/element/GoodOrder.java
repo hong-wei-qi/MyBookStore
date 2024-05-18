@@ -25,7 +25,6 @@ public class GoodOrder {
 //    public GoodOrder() {
 //        this.subtotal = 0;
 //    }
-
     /**
      * 初始化 `單項商品訂單`
      *
@@ -39,7 +38,6 @@ public class GoodOrder {
         this.quantity = quantity;
         this.subtotal = price * quantity;
     }
-
 
     /**
      * @return 商品ID
@@ -121,12 +119,14 @@ public class GoodOrder {
         this.quantity += unit;
         this.countSubtotal();
     }
-    
+
     /**
      * 減少數量一單位
      */
     public void decreaseQuantity() {
-        if (this.quantity == 0) return;
+        if (this.quantity == 0) {
+            return;
+        }
         this.quantity--;
         this.countSubtotal();
     }
@@ -137,7 +137,7 @@ public class GoodOrder {
      * @param unit 欲減少的數量
      */
     public void decreaseQuantity(int unit) {
-        this.quantity = (this.quantity == 0 || this.quantity < unit) ? 0 : (this.quantity-unit);
+        this.quantity = (this.quantity == 0 || this.quantity < unit) ? 0 : (this.quantity - unit);
         this.countSubtotal();
     }
 }

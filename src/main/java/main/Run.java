@@ -3,18 +3,37 @@ package main;
 import element.Book;
 import element.Category;
 import element.User;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import ui.Cart;
+import ui.GlobalUIObject;
+import ui.Index;
 import ui.object.IndexGoodBlock;
 
 /**
- * <h2><b>執行</b></h2>
+ * <h2><b>執行</b></h2><br>
+ * run();
  */
 public class Run {
 
     /**
      * 執行
+     *
+     * @param stage
      */
-    public static void run() {
-
+    public static void run(Stage stage) {
+        setGlobalVariables();
+        setUserList();
+        setCategory();
+        setGoodList();
+        setGlobalUIObject();
+        setIndexScene();
+        setCartScene();
+        stage.setScene(GlobalUIObject.IndexScene);
+        stage.setTitle("書籍訂購系統");
+        stage.show();
     }
 
     /**
@@ -47,14 +66,14 @@ public class Run {
         comics_category.setNewCategory("ghost", "靈異/神怪");
         comics_category.setNewCategory("suspense", "懸疑推理");
         comics_category.setNewCategory("love", "戀愛");
-        
+
         GlobalVariables.category.setNewCategory("novel", novel_category);
         GlobalVariables.category.setNewCategory("comics", comics_category);
-        
+
         GlobalVariables.category2L_name.setNewCategory("novel", "輕小說");
         GlobalVariables.category2L_name.setNewCategory("comics", "漫畫");
     }
-    
+
     /**
      * 設定全域變數 書籍(商品)清單
      */
@@ -71,8 +90,37 @@ public class Run {
         GlobalVariables.good_list.put("cl001", new Book("cl001", "cl001.jpg", "白聖女與黑牧師 (1)", "長相可愛，卻有很多小毛病的聖女—賽西莉亞，以及外表嚴肅卻十分溫柔，對聖女過度保護、家事萬能的牧師—羅倫斯，兩人一起度過的每一天，無時無刻都在不自覺地放閃（！）有著奇幻世界觀的溫馨愛情喜劇（？）羅倫斯的特殊體質究竟是怎麼回事？趕快翻開此作一見分曉！", 100, "love", "comics"));
         GlobalVariables.good_list.put("cl002", new Book("cl002", "cl002.jpg", "白聖女與黑牧師 (2)", "聖女也是女孩子－－！純潔但有些迷糊的聖女賽西莉亞，其實偷偷暗戀著同住在一個屋簷下的牧師‧羅倫斯。然而照顧聖女精明能幹，對於感情卻很遲鈍的羅倫斯，似乎完全沒有察覺……兩人的「毫無自覺戀愛喜劇」第2集歡樂上演中！", 100, "love", "comics"));
     }
-    
+
+    /**
+     * 設定全域UI物件(GlobalUIObject) 書籍(商品) UI物件 清單
+     */
     public static void setGlobalUIObject() {
         IndexGoodBlock.IndexGoodObjectList();
+    }
+
+    /**
+     * 設定全域UI物件(GlobalUIObject) 主頁
+     */
+    public static void setIndexScene() {
+        GlobalUIObject.INDEX = new Index();
+        VBox indexScene = new VBox();
+        indexScene.setSpacing(10);
+        indexScene.setPadding(new Insets(10, 10, 10, 10));
+        indexScene.getStylesheets().add("/css/bootstrap3.css");
+        indexScene.getChildren().addAll(GlobalUIObject.INDEX.header, GlobalUIObject.INDEX.content);
+        GlobalUIObject.IndexScene = new Scene(indexScene, 1000, 700);
+    }
+
+    /**
+     * 設定全域UI物件(GlobalUIObject) 購物車頁面
+     */
+    public static void setCartScene() {
+        GlobalUIObject.CART = new Cart();
+        VBox cartScene = new VBox();
+        cartScene.setSpacing(10);
+        cartScene.setPadding(new Insets(10, 10, 10, 10));
+        cartScene.getStylesheets().add("/css/bootstrap3.css");
+        cartScene.getChildren().addAll(GlobalUIObject.CART.header, GlobalUIObject.CART.cartList, GlobalUIObject.CART.cartInfoBlock);
+        GlobalUIObject.CartScene = new Scene(cartScene, 1000, 700);
     }
 }
