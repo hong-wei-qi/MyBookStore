@@ -1,12 +1,14 @@
 BookStore 書籍訂購系統
 =
   
-main  
+main
+-
 > Main 主程式  
 > Run 執行檔案  
 > GlobalVariables 全域變數  
   
-element  
+element
+-
 > Book 書籍  
 > Category 分類  
 > CategoryTwoLevel 二階分類  
@@ -15,7 +17,8 @@ element
 > Cart 個人購物車  
 > User 用戶  
   
-ui  
+ui
+-
 > Index 主頁 UI介面  
 > Cart 購物車 UI介面  
 > GlobalUIObject UI介面全域變數  
