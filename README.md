@@ -5,7 +5,7 @@ BookStore 書籍訂購系統
 main
 -
 Main 主程式  
-Run 執行檔案  
+Run 執行程式  
 GlobalVariables 全域變數  
   
 element
