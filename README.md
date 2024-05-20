@@ -35,7 +35,7 @@ main
 > > static void setGlobalUIObject()  : 設定全域UI物件(GlobalUIObject)  
 > > static void setIndexScene()      : 設定全域UI物件(GlobalUIObject) 主頁  
 > > static void setCartScene()       : 設定全域UI物件(GlobalUIObject) 購物車頁面  
-|  
+  
 > GlobalVariables 全域變數  
 > > static String                 now_user              : 目前操作用戶  
 > > static TreeMap<String, User>  user_list             : 用戶清單  
