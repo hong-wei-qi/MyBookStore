@@ -19,7 +19,7 @@ ui
 |--Cart 購物車 UI介面  
 |--GlobalUIObject UI介面全域變數  
 |--object  
-|--|--IndexGoodBlock 商品UI物件  
+> > IndexGoodBlock 商品UI物件  
 |--|--CartGoodBlock 購物車UI物件  
   
 相關的全域變數都由 `main.Run.run()` 建立，同時初始化介面並執行。  
