@@ -13,8 +13,8 @@ import ui.Index;
 import ui.object.IndexGoodBlock;
 
 /**
- * <h2><b>執行</b></h2><br>
- * run();
+ * <h2><b>執行程式</b></h2><br>
+ * run(stage);
  */
 public class Run {
 
@@ -25,19 +25,23 @@ public class Run {
      */
     public static void run(Stage stage) {
         setGlobalVariables();
-        setUserList();
-        setCategory();
-        setGoodList();
         setGlobalUIObject();
-        setIndexScene();
-        setCartScene();
+        runScene(stage);
+    }
+    
+    /**
+     * 執行UI介面
+     *
+     * @param stage
+     */
+    public static void runScene(Stage stage) {
         stage.setScene(GlobalUIObject.IndexScene);
         stage.setTitle("書籍訂購系統");
         stage.show();
     }
 
     /**
-     * 設定全域變數
+     * 設定全域變數(GlobalVariables)
      */
     public static void setGlobalVariables() {
         setUserList();
@@ -46,7 +50,7 @@ public class Run {
     }
 
     /**
-     * 設定全域變數 用戶清單及目前操作用戶
+     * 設定全域變數(GlobalVariables) 用戶清單及目前操作用戶
      */
     public static void setUserList() {
         GlobalVariables.user_list.put("u001", new User("u001"));
@@ -56,7 +60,7 @@ public class Run {
     }
 
     /**
-     * 設定全域變數 二階分類
+     * 設定全域變數(GlobalVariables) 二階分類
      */
     public static void setCategory() {
         Category novel_category = new Category();
@@ -70,8 +74,8 @@ public class Run {
         GlobalVariables.category.setNewCategory("novel", novel_category);
         GlobalVariables.category.setNewCategory("comics", comics_category);
 
-        GlobalVariables.category2L_name.setNewCategory("novel", "輕小說");
-        GlobalVariables.category2L_name.setNewCategory("comics", "漫畫");
+        GlobalVariables.category.setNewCategory2L_name("novel", "輕小說");
+        GlobalVariables.category.setNewCategory2L_name("comics", "漫畫");
     }
 
     /**
@@ -92,10 +96,12 @@ public class Run {
     }
 
     /**
-     * 設定全域UI物件(GlobalUIObject) 書籍(商品) UI物件 清單
+     * 設定全域UI物件(GlobalUIObject)
      */
     public static void setGlobalUIObject() {
         IndexGoodBlock.IndexGoodObjectList();
+        setIndexScene();
+        setCartScene();
     }
 
     /**

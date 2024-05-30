@@ -25,7 +25,7 @@ public class User extends Cart {
     }
 
     /**
-     * 重新用戶ID
+     * 重設用戶ID
      *
      * @param user_id 用戶ID
      */

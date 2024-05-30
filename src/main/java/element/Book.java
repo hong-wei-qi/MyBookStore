@@ -7,8 +7,7 @@ package element;
  * name: 書籍名稱<br>
  * content: 書籍摘要<br>
  * price: 書籍價格<br>
- * category1L: 書籍一階分類<br>
- * category2L: 書籍二階分類
+ * category1L: 書籍一階分類
  */
 public class Book {
 
@@ -24,8 +23,6 @@ public class Book {
     private int price;
     // 書籍一階分類
     private String category1L;
-    // 書籍二階分類
-    private String category2L;
 
     /**
      * 初始化 `書籍` 沒有任何屬性
@@ -42,7 +39,6 @@ public class Book {
      * @param content 書籍摘要
      * @param price 書籍價格
      * @param category1L 書籍一階分類
-     * @param category2L 書籍二階分類
      */
     public Book(String bool_id, String image, String name, String content, int price, String category1L, String category2L) {
         this.book_id = bool_id;
@@ -51,7 +47,6 @@ public class Book {
         this.content = content;
         this.price = price;
         this.category1L = category1L;
-        this.category2L = category2L;
     }
 
     /**
@@ -94,13 +89,6 @@ public class Book {
      */
     public String getCategory1L() {
         return category1L;
-    }
-
-    /**
-     * @return 書籍二階分類
-     */
-    public String getCategory2L() {
-        return category2L;
     }
 
     /**
@@ -155,15 +143,6 @@ public class Book {
      */
     public void setCategory1L(String category1L) {
         this.category1L = category1L;
-    }
-
-    /**
-     * 重新設置書籍二階分類
-     *
-     * @param category2L 書籍二階分類
-     */
-    public void setCategory2L(String category2L) {
-        this.category2L = category2L;
     }
 
 }

@@ -80,9 +80,9 @@ public class Index {
         category2L_Pane.setPrefHeight(60);
         category2L_Pane.setAlignment(Pos.CENTER_LEFT);
         category2L_Pane.setHgap(5);
-        for (String category2L_id : GlobalVariables.category2L_name.keySet()) {
+        for (String category2L_id : GlobalVariables.category.keySet()) {
             Button category2L_button = new Button();
-            category2L_button.setText(GlobalVariables.category2L_name.getValue(category2L_id));
+            category2L_button.setText(GlobalVariables.category.getCategory2L_name(category2L_id));
             category2L_button.setOnAction((t) -> {
                 this.setCategory1LBlock(category2L_id);
                 this.setIndexGoodBlock(category2L_id);
@@ -162,7 +162,7 @@ public class Index {
         VBox b = new VBox();
         b.setSpacing(10);
         for (String id : GlobalUIObject.IndexGoodBlock_list.keySet()) {
-            if (!(GlobalVariables.good_list.get(id).getCategory2L().equals(category2L))) {
+            if (!(GlobalVariables.category.getCategory2L_id(GlobalVariables.good_list.get(id).getCategory1L()).equals(category2L))) {
                 continue;
             }
             b.getChildren().add(GlobalUIObject.IndexGoodBlock_list.get(id));
@@ -181,7 +181,7 @@ public class Index {
         VBox b = new VBox();
         b.setSpacing(10);
         for (String id : GlobalUIObject.IndexGoodBlock_list.keySet()) {
-            if (!(GlobalVariables.good_list.get(id).getCategory2L().equals(category2L))) {
+            if (!(GlobalVariables.category.getCategory2L_id(GlobalVariables.good_list.get(id).getCategory1L()).equals(category2L))) {
                 continue;
             }
             if (!(GlobalVariables.good_list.get(id).getCategory1L().equals(category1L))) {

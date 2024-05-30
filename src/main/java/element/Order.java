@@ -55,6 +55,7 @@ public class Order {
      * @param amount 商品項目數量
      * @param quantity 商品總數量
      * @param total 訂單總金額
+     * @return 是否修改成功
      */
     public boolean alterOrder(TreeMap<String, GoodOrder> list, int amount, int quantity, int total) {
         if (!this.alter) {
