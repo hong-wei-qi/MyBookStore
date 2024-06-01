@@ -35,6 +35,9 @@ import ui.object.CartGoodBlock;
  */
 public class Cart {
 
+    // 目前用戶名稱
+    public Label user_name_Label = new Label();
+    
     // 標頭 含有 { icon(回首頁) 切換用戶 }
     public HBox header = new HBox();
 
@@ -81,6 +84,7 @@ public class Cart {
         all_button.setGraphic(imgview);
         all_button.setOnAction((e) -> {
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            GlobalUIObject.LOGIN.goToLogin(stage);
             stage.setScene(GlobalUIObject.IndexScene);
             stage.show();
         });
@@ -90,19 +94,21 @@ public class Cart {
         header.setHgrow(filling, Priority.ALWAYS);
 
         // 切換用戶
-        ComboBox user_ChoiceBox = new ComboBox();
-        for (String user_id : GlobalVariables.user_list.keySet()) {
-            user_ChoiceBox.getItems().add(user_id);
-        }
-        user_ChoiceBox.setOnAction((e) -> {
-            GlobalVariables.now_user = user_ChoiceBox.getSelectionModel().getSelectedItem().toString();
-            GlobalUIObject.SelectAll_inCartList.setSelected(false);
-            this.setInCartList();
-            // System.out.println(user_ChoiceBox.getSelectionModel().getSelectedItem());
-        });
+//        ComboBox user_ChoiceBox = new ComboBox();
+//        var user_list = GlobalVariables.userDAO.getAll();
+//        for (String user_id : user_list.keySet()) {
+//            user_ChoiceBox.getItems().add(user_id);
+//        }
+//        user_ChoiceBox.setOnAction((e) -> {
+//            GlobalVariables.now_user = user_ChoiceBox.getSelectionModel().getSelectedItem().toString();
+//            GlobalUIObject.SelectAll_inCartList.setSelected(false);
+//            GlobalVariables.cart.clearCart();
+//            this.setInCartList();
+//            // System.out.println(user_ChoiceBox.getSelectionModel().getSelectedItem());
+//        });
 
         // 購物車
-        header.getChildren().addAll(all_button, filling, user_ChoiceBox);
+        header.getChildren().addAll(all_button, filling, this.user_name_Label);
 
         // 測試按鈕
         Button test = new Button();
@@ -185,7 +191,7 @@ public class Cart {
         deleteAll.setText("刪除選取");
         deleteAll.setOnAction((e) -> {
             for (String selectItem : GlobalVariables.inCartList_SelectList) {
-                GlobalVariables.user_list.get(GlobalVariables.now_user).removeFromCart(selectItem);
+                GlobalVariables.cart.removeFromCart(selectItem);
 //                System.out.println(GlobalVariables.now_user + " remove " + selectItem + " from to cart.");
             }
             if (GlobalUIObject.SelectAll_inCartList.isSelected()) {
@@ -206,13 +212,13 @@ public class Cart {
         Button checkout = new Button();
         checkout.setText("送出訂單");
         checkout.setOnAction((e) -> {
-            if (GlobalVariables.user_list.get(GlobalVariables.now_user).getGoodAmount() == 0) {
+            if (GlobalVariables.cart.getGoodAmount() == 0) {
                 return;
             }
             LocalDateTime myDateObj = LocalDateTime.now();
             DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
             String order_id = myDateObj.format(myFormatObj);
-            var cart = GlobalVariables.user_list.get(GlobalVariables.now_user).getCart();
+            var cart = GlobalVariables.cart.getCart();
             TreeMap<String, GoodOrder> order_list = new TreeMap();
             for (String i : cart.keySet()) {
                 GoodOrder good = new GoodOrder(cart.get(i).getGood_id(), cart.get(i).getPrice(), cart.get(i).getQuantity());
@@ -222,12 +228,12 @@ public class Cart {
                     order_id,
                     GlobalVariables.now_user,
                     order_list,
-                    GlobalVariables.user_list.get(GlobalVariables.now_user).getGoodAmount(),
-                    GlobalVariables.user_list.get(GlobalVariables.now_user).getGoodQuantity(),
-                    GlobalVariables.user_list.get(GlobalVariables.now_user).getTotal()
+                    GlobalVariables.cart.getGoodAmount(),
+                    GlobalVariables.cart.getGoodQuantity(),
+                    GlobalVariables.cart.getTotal()
             );
             GlobalVariables.order_list.put(order_id, order);
-            GlobalVariables.user_list.get(GlobalVariables.now_user).clearCart();
+            GlobalVariables.cart.clearCart();
             setInCartList();
         });
         submit.getChildren().add(checkout);
@@ -240,9 +246,9 @@ public class Cart {
      */
     public void setCartInfo() {
         this.cartInfo.setText(String.format("共 %d 項商品，數量 %d 個\n總金額：%d",
-                GlobalVariables.user_list.get(GlobalVariables.now_user).getGoodAmount(),
-                GlobalVariables.user_list.get(GlobalVariables.now_user).getGoodQuantity(),
-                GlobalVariables.user_list.get(GlobalVariables.now_user).getTotal()
+                GlobalVariables.cart.getGoodAmount(),
+                GlobalVariables.cart.getGoodQuantity(),
+                GlobalVariables.cart.getTotal()
         ));
     }
 
@@ -264,7 +270,7 @@ public class Cart {
             for (String good_id : order_list.keySet()) {
                 System.out.println(String.format("%s | %s | %d | %d | %d",
                         order_list.get(good_id).getGood_id(),
-                        GlobalVariables.good_list.get(good_id).getName(),
+                        GlobalVariables.productDAO.getById(good_id).getName(),
                         order_list.get(good_id).getPrice(),
                         order_list.get(good_id).getQuantity(),
                         order_list.get(good_id).getSubtotal()

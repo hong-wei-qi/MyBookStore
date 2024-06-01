@@ -1,10 +1,13 @@
 package ui;
 
+import element.Book;
+import element.Category;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,6 +27,9 @@ import main.GlobalVariables;
  */
 public class Index {
 
+    // 目前用戶名稱
+    public Label user_name_Label = new Label();
+    
     // 標頭 含有 { icon 二階分類選項 切換用戶 購物車 }
     public HBox header = new HBox();
 
@@ -80,9 +86,10 @@ public class Index {
         category2L_Pane.setPrefHeight(60);
         category2L_Pane.setAlignment(Pos.CENTER_LEFT);
         category2L_Pane.setHgap(5);
-        for (String category2L_id : GlobalVariables.category.keySet()) {
+        Category category2L = GlobalVariables.categoryDAO.getTwoLevel();
+        for (String category2L_id : category2L.keySet()) {
             Button category2L_button = new Button();
-            category2L_button.setText(GlobalVariables.category.getCategory2L_name(category2L_id));
+            category2L_button.setText(category2L.getValue(category2L_id));
             category2L_button.setOnAction((t) -> {
                 this.setCategory1LBlock(category2L_id);
                 this.setIndexGoodBlock(category2L_id);
@@ -95,28 +102,39 @@ public class Index {
         header.setHgrow(filling, Priority.ALWAYS);
 
         // 切換用戶
-        ComboBox user_ChoiceBox = new ComboBox();
-        for (String user_id : GlobalVariables.user_list.keySet()) {
-            user_ChoiceBox.getItems().add(user_id);
-        }
-        user_ChoiceBox.setOnAction((e) -> {
-            GlobalVariables.now_user = user_ChoiceBox.getSelectionModel().getSelectedItem().toString();
-            // System.out.println(user_ChoiceBox.getSelectionModel().getSelectedItem());
+//        ComboBox user_ChoiceBox = new ComboBox();
+//        var user_list = GlobalVariables.userDAO.getAll();
+//        for (String user_id : user_list.keySet()) {
+//            user_ChoiceBox.getItems().add(user_id);
+//        }
+//        user_ChoiceBox.setOnAction((e) -> {
+//            GlobalVariables.now_user = user_ChoiceBox.getSelectionModel().getSelectedItem().toString();
+//            GlobalVariables.cart.clearCart();
+//            // System.out.println(user_ChoiceBox.getSelectionModel().getSelectedItem());
+//        });
+//        user_ChoiceBox.getSelectionModel().select(GlobalVariables.now_user);
+
+        Button logout = new Button();
+        logout.setText("登出");
+        logout.setOnAction((e) -> {
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            GlobalVariables.now_user = "";
+            GlobalUIObject.LOGIN.goToLogin(stage);
         });
-        user_ChoiceBox.getSelectionModel().select(GlobalVariables.now_user);
 
         // 購物車
         Button goToCart = new Button();
         goToCart.setText("購物車");
         goToCart.setOnAction((e) -> {
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            GlobalUIObject.LOGIN.goToLogin(stage);
             GlobalUIObject.SelectAll_inCartList.setSelected(false);
             GlobalUIObject.CART.setInCartList();
-            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             stage.setScene(GlobalUIObject.CartScene);
             stage.show();
         });
 
-        header.getChildren().addAll(all_button, category2L_Pane, filling, user_ChoiceBox, goToCart);
+        header.getChildren().addAll(all_button, category2L_Pane, filling, this.user_name_Label, logout,goToCart);
     }
 
     /**
@@ -131,9 +149,10 @@ public class Index {
      */
     public void setCategory1LBlock(String category2L_id) {
         this.category1LBlock.getChildren().clear();
-        for (String category1L_id : GlobalVariables.category.getCategory(category2L_id).keySet()) {
+        Category category1L = GlobalVariables.categoryDAO.getOneLevel(category2L_id);
+        for (String category1L_id : category1L.keySet()) {
             Button category1L_button = new Button();
-            category1L_button.setText(GlobalVariables.category.getCategory(category2L_id).getValue(category1L_id));
+            category1L_button.setText(category1L.getValue(category1L_id));
             category1L_button.setOnAction((t) -> {
                 this.setIndexGoodBlock(category2L_id, category1L_id);
             });
@@ -162,7 +181,7 @@ public class Index {
         VBox b = new VBox();
         b.setSpacing(10);
         for (String id : GlobalUIObject.IndexGoodBlock_list.keySet()) {
-            if (!(GlobalVariables.category.getCategory2L_id(GlobalVariables.good_list.get(id).getCategory1L()).equals(category2L))) {
+            if (!(GlobalVariables.categoryDAO.getTwoLevelID(GlobalVariables.productDAO.getById(id).getCategory1L()).equals(category2L))) {
                 continue;
             }
             b.getChildren().add(GlobalUIObject.IndexGoodBlock_list.get(id));
@@ -181,10 +200,11 @@ public class Index {
         VBox b = new VBox();
         b.setSpacing(10);
         for (String id : GlobalUIObject.IndexGoodBlock_list.keySet()) {
-            if (!(GlobalVariables.category.getCategory2L_id(GlobalVariables.good_list.get(id).getCategory1L()).equals(category2L))) {
+            Book product = GlobalVariables.productDAO.getById(id);
+            if (!(GlobalVariables.categoryDAO.getTwoLevelID(product.getCategory1L()).equals(category2L))) {
                 continue;
             }
-            if (!(GlobalVariables.good_list.get(id).getCategory1L().equals(category1L))) {
+            if (!(product.getCategory1L().equals(category1L))) {
                 continue;
             }
             b.getChildren().add(GlobalUIObject.IndexGoodBlock_list.get(id));

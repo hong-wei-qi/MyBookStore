@@ -40,8 +40,8 @@ public class Book {
      * @param price 書籍價格
      * @param category1L 書籍一階分類
      */
-    public Book(String bool_id, String image, String name, String content, int price, String category1L, String category2L) {
-        this.book_id = bool_id;
+    public Book(String book_id, String image, String name, String content, int price, String category1L) {
+        this.book_id = book_id;
         this.image = image;
         this.name = name;
         this.content = content;

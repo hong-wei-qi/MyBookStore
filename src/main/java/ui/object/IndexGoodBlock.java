@@ -1,5 +1,6 @@
 package ui.object;
 
+import element.Book;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -23,7 +24,7 @@ public class IndexGoodBlock {
      * 建立 所有 商品UI物件
      */
     public static void IndexGoodObjectList() {
-        for (String i : GlobalVariables.good_list.keySet()) {
+        for (String i : GlobalVariables.productDAO.getAll().keySet()) {
             IndexGoodObject(i);
         }
     }
@@ -37,8 +38,9 @@ public class IndexGoodBlock {
         HBox igo = new HBox();
         igo.setSpacing(10);
         igo.setPadding(new Insets(0, 0, 10, 0));
+        Book product = GlobalVariables.productDAO.getById(good_id);
 
-        Image img = new Image("/imgs/" + GlobalVariables.good_list.get(good_id).getImage());
+        Image img = new Image("/imgs/" + product.getImage());
         ImageView imgview = new ImageView(img);
         imgview.setFitHeight(200);
         imgview.setPreserveRatio(true);
@@ -50,12 +52,12 @@ public class IndexGoodBlock {
         Label name = new Label();
         name.setFont(new Font(15));
         name.setPrefSize(500, 20);
-        name.setText(GlobalVariables.good_list.get(good_id).getName());
+        name.setText(product.getName());
         Label content = new Label();
         content.setFont(new Font(15));
         content.setPrefSize(500, 160);
         content.setAlignment(Pos.TOP_LEFT);
-        content.setText(GlobalVariables.good_list.get(good_id).getContent());
+        content.setText(product.getContent());
         info.getChildren().addAll(name, content);
 
         VBox control = new VBox();
@@ -64,12 +66,12 @@ public class IndexGoodBlock {
         Label price = new Label();
         price.setFont(new Font(17));
         price.setPrefSize(300, 20);
-        price.setText("價格：" + GlobalVariables.good_list.get(good_id).getPrice());
+        price.setText("價格：" + product.getPrice());
         Button add = new Button();
         add.setText("加入購物車");
         add.setOnAction((t) -> {
 //            System.out.println(GlobalVariables.now_user + " add " + good_id + " in to cart.");
-            GlobalVariables.user_list.get(GlobalVariables.now_user).addToCart(good_id, GlobalVariables.good_list.get(good_id).getPrice(), 1);
+            GlobalVariables.cart.addToCart(good_id, product.getPrice(), 1);
         });
         control.getChildren().addAll(price, add);
 
