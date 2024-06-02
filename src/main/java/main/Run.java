@@ -1,8 +1,5 @@
 package main;
 
-import element.Book;
-import element.Category;
-import element.User;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -11,6 +8,7 @@ import ui.Cart;
 import ui.GlobalUIObject;
 import ui.Index;
 import ui.Login;
+import ui.ProductManage;
 import ui.object.IndexGoodBlock;
 
 /**
@@ -37,7 +35,8 @@ public class Run {
      */
     public static void runScene(Stage stage) {
 //        stage.setScene(GlobalUIObject.IndexScene);
-        stage.setScene(GlobalUIObject.LoginScene);
+//        stage.setScene(GlobalUIObject.LoginScene);
+        stage.setScene(GlobalUIObject.ProductManageScene);
         stage.setTitle("書籍訂購系統");
         stage.show();
     }
@@ -113,6 +112,7 @@ public class Run {
         setIndexScene();
         setCartScene();
         setLoginScene();
+        setProductManage();
     }
 
     /**
@@ -152,5 +152,15 @@ public class Run {
         cartScene.getStylesheets().add("/css/bootstrap3.css");
         cartScene.getChildren().addAll(GlobalUIObject.CART.header, GlobalUIObject.CART.cartList, GlobalUIObject.CART.cartInfoBlock);
         GlobalUIObject.CartScene = new Scene(cartScene, 1000, 700);
+    }
+    
+    public static void setProductManage() {
+        GlobalUIObject.PRODUCT_MANAGE = new ProductManage();
+        VBox productManageScene = new VBox();
+        productManageScene.setSpacing(10);
+        productManageScene.setPadding(new Insets(10, 10, 10, 10));
+        productManageScene.getStylesheets().add("/css/bootstrap3.css");
+        productManageScene.getChildren().addAll(GlobalUIObject.PRODUCT_MANAGE.content, GlobalUIObject.PRODUCT_MANAGE.console);
+        GlobalUIObject.ProductManageScene = new Scene(productManageScene, 1000, 700);
     }
 }

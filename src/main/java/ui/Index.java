@@ -6,7 +6,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -100,19 +99,6 @@ public class Index {
         // 填充中間空白部分
         TilePane filling = new TilePane();
         header.setHgrow(filling, Priority.ALWAYS);
-
-        // 切換用戶
-//        ComboBox user_ChoiceBox = new ComboBox();
-//        var user_list = GlobalVariables.userDAO.getAll();
-//        for (String user_id : user_list.keySet()) {
-//            user_ChoiceBox.getItems().add(user_id);
-//        }
-//        user_ChoiceBox.setOnAction((e) -> {
-//            GlobalVariables.now_user = user_ChoiceBox.getSelectionModel().getSelectedItem().toString();
-//            GlobalVariables.cart.clearCart();
-//            // System.out.println(user_ChoiceBox.getSelectionModel().getSelectedItem());
-//        });
-//        user_ChoiceBox.getSelectionModel().select(GlobalVariables.now_user);
 
         Button logout = new Button();
         logout.setText("登出");

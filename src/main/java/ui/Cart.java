@@ -10,7 +10,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -92,20 +91,6 @@ public class Cart {
         // 填充中間空白部分
         TilePane filling = new TilePane();
         header.setHgrow(filling, Priority.ALWAYS);
-
-        // 切換用戶
-//        ComboBox user_ChoiceBox = new ComboBox();
-//        var user_list = GlobalVariables.userDAO.getAll();
-//        for (String user_id : user_list.keySet()) {
-//            user_ChoiceBox.getItems().add(user_id);
-//        }
-//        user_ChoiceBox.setOnAction((e) -> {
-//            GlobalVariables.now_user = user_ChoiceBox.getSelectionModel().getSelectedItem().toString();
-//            GlobalUIObject.SelectAll_inCartList.setSelected(false);
-//            GlobalVariables.cart.clearCart();
-//            this.setInCartList();
-//            // System.out.println(user_ChoiceBox.getSelectionModel().getSelectedItem());
-//        });
 
         // 購物車
         header.getChildren().addAll(all_button, filling, this.user_name_Label);

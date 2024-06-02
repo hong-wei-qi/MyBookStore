@@ -8,7 +8,7 @@ import javafx.scene.layout.HBox;
 
 public class GlobalUIObject {
 
-    // 登入介面
+    // 登入物件
     public static Login LOGIN;
     
     // 主頁物件
@@ -17,6 +17,9 @@ public class GlobalUIObject {
     // 購物車頁面物件
     public static Cart CART;
 
+    // 商品管理物件
+    public static ProductManage PRODUCT_MANAGE;
+    
     // 登入
     public static Scene LoginScene;
     
@@ -31,4 +34,7 @@ public class GlobalUIObject {
 
     // 書籍(商品) UI物件 清單
     public static TreeMap<String, HBox> IndexGoodBlock_list = new TreeMap();
+    
+    // 商品管理
+    public static Scene ProductManageScene;
 }
