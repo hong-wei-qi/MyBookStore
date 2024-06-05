@@ -217,7 +217,8 @@ public class Cart {
                     GlobalVariables.cart.getGoodQuantity(),
                     GlobalVariables.cart.getTotal()
             );
-            GlobalVariables.order_list.put(order_id, order);
+            // GlobalVariables.order_list.put(order_id, order);
+            GlobalVariables.orderDAO.insert(order);
             GlobalVariables.cart.clearCart();
             setInCartList();
         });
@@ -242,23 +243,24 @@ public class Cart {
      */
     public void showOrder() {
         System.out.println("\n" + GlobalVariables.now_user + "已成立訂單資訊");
-        for (String order_id : GlobalVariables.order_list.keySet()) {
-            if (!(GlobalVariables.order_list.get(order_id).getUser_id().equals(GlobalVariables.now_user))) {
+        var order_list = GlobalVariables.orderDAO.getByUserId(GlobalVariables.now_user);
+        for (String order_id : order_list.keySet()) {
+            if (!(order_list.get(order_id).getUser_id().equals(GlobalVariables.now_user))) {
                 continue;
             }
-            System.out.println("訂單ID：" + GlobalVariables.order_list.get(order_id).getOrder_id());
-            System.out.println("總金額：" + GlobalVariables.order_list.get(order_id).getTotal());
-            System.out.println("修改狀態：" + ((GlobalVariables.order_list.get(order_id).isAlter()) ? "還可修改" : "不可修改"));
+            System.out.println("訂單ID：" + order_list.get(order_id).getOrder_id());
+            System.out.println("總金額：" + order_list.get(order_id).getTotal());
+            System.out.println("修改狀態：" + ((order_list.get(order_id).isAlter()) ? "還可修改" : "不可修改"));
             System.out.println("訂單明細");
-            var order_list = GlobalVariables.order_list.get(order_id).getList();
+            var good_order_list = order_list.get(order_id).getList();
             System.out.println("商品ID | 商品名稱 | 單價 | 數量 | 小計");
-            for (String good_id : order_list.keySet()) {
+            for (String good_id : good_order_list.keySet()) {
                 System.out.println(String.format("%s | %s | %d | %d | %d",
-                        order_list.get(good_id).getGood_id(),
+                        good_order_list.get(good_id).getGood_id(),
                         GlobalVariables.productDAO.getById(good_id).getName(),
-                        order_list.get(good_id).getPrice(),
-                        order_list.get(good_id).getQuantity(),
-                        order_list.get(good_id).getSubtotal()
+                        good_order_list.get(good_id).getPrice(),
+                        good_order_list.get(good_id).getQuantity(),
+                        good_order_list.get(good_id).getSubtotal()
                 ));
             }
             System.out.println("==================================================\n");

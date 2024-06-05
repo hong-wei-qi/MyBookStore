@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -41,7 +42,7 @@ public class Login {
         label_password.setFont(new Font(15));
         label_password.setText("密碼");
         
-        TextField password = new TextField();
+        PasswordField  password = new PasswordField ();
         password.setFont(new Font(15));
         password.setPromptText("你的密碼...");
         
@@ -54,13 +55,18 @@ public class Login {
                 message.setText("登入失敗！");
                 return;
             }
+            message.setText("");
             account.setText("");
             password.setText("");
             String user_name = GlobalVariables.userDAO.getById(GlobalVariables.now_user).getName();
             GlobalUIObject.INDEX.user_name_Label.setText(user_name);
             GlobalUIObject.CART.user_name_Label.setText(user_name);
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-            stage.setScene(GlobalUIObject.IndexScene);
+            if (GlobalVariables.userDAO.permissions(GlobalVariables.now_user)) {
+                stage.setScene(GlobalUIObject.ProductManageScene);
+            } else {
+                stage.setScene(GlobalUIObject.IndexScene);
+            }
             stage.show();
         });
         

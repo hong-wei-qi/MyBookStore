@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.TreeMap;
 
+/**
+ * 資料庫連接 db_product
+ */
 public class ProductDAO {
 
     private Connection conn;

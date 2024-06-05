@@ -4,6 +4,7 @@ import element.Book;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -12,6 +13,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
 import main.GlobalVariables;
@@ -27,6 +29,8 @@ public class ProductManage {
     // 商品列表內容
     private ObservableList<Book> product_list;
 
+    public Button logout = new Button();
+    
     // 商品列表
     public TableView content = new TableView();
 
@@ -38,9 +42,19 @@ public class ProductManage {
      */
     public ProductManage() {
         console.setEditable(false);
+        setLogoutButton();
         setContent();
     }
 
+    private void setLogoutButton() {
+        logout.setText("登出");
+        logout.setOnAction((e) -> {
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            GlobalVariables.now_user = "";
+            GlobalUIObject.LOGIN.goToLogin(stage);
+        });
+    }
+    
     /**
      * 建立商品列表
      */

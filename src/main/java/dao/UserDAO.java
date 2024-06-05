@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.TreeMap;
 
+/**
+ * 資料庫連接 db_user
+ */
 public class UserDAO {
 
     private Connection conn;
@@ -17,6 +20,29 @@ public class UserDAO {
      */
     private void getConn() {
         this.conn = BookStoreDB.getConnection();
+    }
+    
+    /**
+     * 取得用戶ID權限
+     *
+     * @param user_id 用戶ID
+     * @return boolean 用戶權限 (true:管理員 | false:一般用戶)
+     */
+    public boolean permissions(String user_id) {
+        this.getConn();
+        boolean p = false;
+        String query = "SELECT `permissions` FROM `user` WHERE `user_id` = ?;";
+        try {
+            PreparedStatement state = conn.prepareStatement(query);
+            state.setString(1, user_id);
+            ResultSet result = state.executeQuery();
+            while (result.next()) {
+                p = result.getInt("permissions") == 1;
+            }
+        } catch (SQLException ex) {
+            BookStoreDB.exception(CLASS_NAME, "permissions(取得用戶ID權限) (true:管理員 | false:一般用戶)", ex);
+        }
+        return p;
     }
 
     /**

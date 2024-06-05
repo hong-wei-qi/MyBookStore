@@ -8,6 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import main.GlobalVariables;
 
+/**
+ * 資料庫連接 db_category, db_category_two_level
+ */
 public class CategoryDAO {
 
     private Connection conn;

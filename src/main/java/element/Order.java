@@ -33,6 +33,7 @@ public class Order {
      * 初始化 `訂單`
      *
      * @param order_id 訂單ID
+     * @param user_id 用戶ID
      * @param list 訂單商品清單
      * @param amount 商品項目數量
      * @param quantity 商品總數量
@@ -46,6 +47,47 @@ public class Order {
         this.quantity = quantity;
         this.total = total;
         this.alter = true;
+    }
+    
+    /**
+     * 初始化 `訂單`
+     *
+     * @param order_id 訂單ID
+     * @param user_id 用戶ID
+     * @param list 訂單商品清單
+     * @param amount 商品項目數量
+     * @param quantity 商品總數量
+     * @param total 訂單總金額
+     * @param alter 修改狀態
+     */
+    public Order(String order_id, String user_id, TreeMap<String, GoodOrder> list, int amount, int quantity, int total, int alter) {
+        this.order_id = order_id;
+        this.user_id = user_id;
+        this.list = list;
+        this.amount = amount;
+        this.quantity = quantity;
+        this.total = total;
+        this.alter = (alter == 1);
+    }
+    
+    /**
+     * 初始化 `訂單`
+     *
+     * @param order_id 訂單ID
+     * @param user_id 用戶ID
+     * @param amount 商品項目數量
+     * @param quantity 商品總數量
+     * @param total 訂單總金額
+     * @param alter 修改狀態
+     */
+    public Order(String order_id, String user_id, int amount, int quantity, int total, int alter) {
+        this.order_id = order_id;
+        this.user_id = user_id;
+        this.amount = amount;
+        this.quantity = quantity;
+        this.total = total;
+        this.alter = (alter == 1);
+        this.list = new TreeMap();
     }
 
     /**
@@ -65,6 +107,28 @@ public class Order {
         this.amount = amount;
         this.quantity = quantity;
         this.total = total;
+        this.alter = false;
+        return true;
+    }
+    
+    /**
+     * 修改訂單，如果此訂單還未被修改過。
+     *
+     * @param list 訂單商品清單
+     * @return 是否修改成功
+     */
+    public boolean alterOrder(TreeMap<String, GoodOrder> list) {
+        if (!this.alter) {
+            return false;
+        }
+        this.list = list;
+        this.amount = this.list.size();
+        this.quantity = 0;
+        this.total = 0;
+        for (String id : this.list.keySet()) {
+            this.quantity += this.list.get(id).getQuantity();
+            this.total += this.list.get(id).getSubtotal();
+        }
         this.alter = false;
         return true;
     }

@@ -35,8 +35,8 @@ public class Run {
      */
     public static void runScene(Stage stage) {
 //        stage.setScene(GlobalUIObject.IndexScene);
-//        stage.setScene(GlobalUIObject.LoginScene);
-        stage.setScene(GlobalUIObject.ProductManageScene);
+        stage.setScene(GlobalUIObject.LoginScene);
+//        stage.setScene(GlobalUIObject.ProductManageScene);
         stage.setTitle("書籍訂購系統");
         stage.show();
     }
@@ -160,7 +160,7 @@ public class Run {
         productManageScene.setSpacing(10);
         productManageScene.setPadding(new Insets(10, 10, 10, 10));
         productManageScene.getStylesheets().add("/css/bootstrap3.css");
-        productManageScene.getChildren().addAll(GlobalUIObject.PRODUCT_MANAGE.content, GlobalUIObject.PRODUCT_MANAGE.console);
+        productManageScene.getChildren().addAll(GlobalUIObject.PRODUCT_MANAGE.content, GlobalUIObject.PRODUCT_MANAGE.console, GlobalUIObject.PRODUCT_MANAGE.logout);
         GlobalUIObject.ProductManageScene = new Scene(productManageScene, 1000, 700);
     }
 }
