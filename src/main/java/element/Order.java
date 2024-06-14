@@ -163,6 +163,24 @@ public class Order {
         this.alter = false;
         return true;
     }
+    
+    /**
+     * 修改訂單
+     *
+     * @param list 訂單商品清單
+     * @return 是否修改成功
+     */
+    public boolean updataOrder(TreeMap<String, GoodOrder> list) {
+        this.list = list;
+        this.amount = this.list.size();
+        this.quantity = 0;
+        this.total = 0;
+        for (String id : this.list.keySet()) {
+            this.quantity += this.list.get(id).getQuantity();
+            this.total += this.list.get(id).getSubtotal();
+        }
+        return true;
+    }
 
     /**
      * 重新設置訂單是否已完成
@@ -234,5 +252,12 @@ public class Order {
      */
     public boolean isAlter() {
         return alter;
+    }
+    
+    /**
+     * @return 修改狀態
+     */
+    public String isAlterString() {
+        return (alter) ? "可修改" : "不可修改";
     }
 }

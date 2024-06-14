@@ -19,8 +19,8 @@ public class GlobalUIObject {
     // 訂單物件
     public static Order ORDER;
 
-    // 商品管理物件
-    public static ProductManage PRODUCT_MANAGE;
+    // 管理後臺物件
+    public static Manage MANAGE;
     
     // 購物車頁面 全選功能
     public static CheckBox SelectAll_inCartList;

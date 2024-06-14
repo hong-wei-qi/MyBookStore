@@ -5,8 +5,8 @@ import ui.Cart;
 import ui.GlobalUIObject;
 import ui.Index;
 import ui.Login;
+import ui.Manage;
 import ui.Order;
-import ui.ProductManage;
 
 /**
  * <h2><b>執行程式</b></h2><br>
@@ -31,10 +31,15 @@ public class Run {
      * @param stage
      */
     public static void runScene(Stage stage) {
-        GlobalVariables.now_user = "u-001";
-        stage.setScene(GlobalUIObject.INDEX.setIndexScene());
-//        stage.setScene(GlobalUIObject.LOGIN.setLoginScene());
-//        stage.setScene(GlobalUIObject.ProductManageScene);
+        
+//        GlobalVariables.now_user = "u-001";
+//        stage.setScene(GlobalUIObject.INDEX.setIndexScene());
+
+        stage.setScene(GlobalUIObject.LOGIN.setLoginScene());
+        
+//        GlobalVariables.now_user = "a-001";
+//        stage.setScene(GlobalUIObject.MANAGE.setManage());
+        
         stage.setTitle("書籍訂購系統");
         stage.show();
     }
@@ -47,6 +52,6 @@ public class Run {
         GlobalUIObject.INDEX = new Index();
         GlobalUIObject.CART = new Cart();
         GlobalUIObject.ORDER = new Order();
-        GlobalUIObject.PRODUCT_MANAGE = new ProductManage();
+        GlobalUIObject.MANAGE = new Manage();
     }
 }

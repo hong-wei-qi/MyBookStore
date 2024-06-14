@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
@@ -16,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
 import main.GlobalVariables;
@@ -29,12 +27,12 @@ import main.GlobalVariables;
  * console: 操作訊息
  */
 public class ProductManage {
+    
+//    public static final String NAME_ = "ProductManage";
+    public static final String NAME = "商品管理";
 
     // 商品列表內容
     private ObservableList<Book> product_list;
-
-    // 登出按鈕
-    public Button logout = new Button();
     
     // 商品列表
     public TableView content = new TableView();
@@ -47,7 +45,6 @@ public class ProductManage {
      */
     public ProductManage() {
         console.setEditable(false);
-        setLogoutButton();
         setContent();
     }
 
@@ -59,20 +56,20 @@ public class ProductManage {
         productManageScene.setSpacing(10);
         productManageScene.setPadding(new Insets(10, 10, 10, 10));
         productManageScene.getStylesheets().add("/css/bootstrap3.css");
-        productManageScene.getChildren().addAll(this.content, this.console, this.logout);
+        productManageScene.getChildren().addAll(this.content, this.console);
         return new Scene(productManageScene, 1000, 700);
     }
     
     /**
-     * 建立登出按鈕
+     * 設置商品管理頁面
      */
-    private void setLogoutButton() {
-        logout.setText("登出");
-        logout.setOnAction((e) -> {
-            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-            GlobalVariables.now_user = "";
-            GlobalUIObject.LOGIN.goToLogin(stage);
-        });
+    public VBox setProductManage_MAIN() {
+        VBox productManageScene = new VBox();
+        productManageScene.setSpacing(10);
+        productManageScene.setPadding(new Insets(10, 10, 10, 10));
+        productManageScene.getStylesheets().add("/css/bootstrap3.css");
+        productManageScene.getChildren().addAll(this.content, this.console);
+        return productManageScene;
     }
     
     /**

@@ -66,7 +66,7 @@ public class Login {
             GlobalUIObject.CART.user_name_Label.setText(user_name);
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             if (GlobalVariables.userDAO.permissions(GlobalVariables.now_user)) {
-                stage.setScene(GlobalUIObject.PRODUCT_MANAGE.setProductManage());
+                stage.setScene(GlobalUIObject.MANAGE.setManage());
             } else {
                 stage.setScene(GlobalUIObject.INDEX.setIndexScene());
             }
