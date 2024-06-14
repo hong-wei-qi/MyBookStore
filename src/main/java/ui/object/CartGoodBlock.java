@@ -114,6 +114,7 @@ public class CartGoodBlock {
 //        content.setAlignment(Pos.TOP_LEFT);
 //        content.setText(product.getContent());
         // 商品單價
+        GlobalVariables.cart.getCart().get(good_id).setPrice(product.getPrice());
         Label price = new Label();
         price.setFont(new Font(15));
         price.setPrefSize(70, 20);

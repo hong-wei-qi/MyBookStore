@@ -5,6 +5,7 @@ import element.Category;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -16,6 +17,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.GlobalVariables;
+import ui.object.IndexGoodBlock;
 
 /**
  * <h2><b>主頁 UI介面</b></h2><br>
@@ -56,6 +58,19 @@ public class Index {
         content.setSpacing(10);
         content.setPrefWidth(950);
         content.getChildren().addAll(this.category1LBlock, this.indexGoodBlock);
+    }
+    
+    /**
+     * 設置主頁介面
+     */
+    public Scene setIndexScene() {
+        GlobalUIObject.INDEX = new Index();
+        VBox indexScene = new VBox();
+        indexScene.setSpacing(10);
+        indexScene.setPadding(new Insets(10, 10, 10, 10));
+        indexScene.getStylesheets().add("/css/bootstrap3.css");
+        indexScene.getChildren().addAll(GlobalUIObject.INDEX.header, GlobalUIObject.INDEX.content);
+        return new Scene(indexScene, 1000, 700);
     }
 
     /**
@@ -100,12 +115,14 @@ public class Index {
         TilePane filling = new TilePane();
         header.setHgrow(filling, Priority.ALWAYS);
 
-        Button logout = new Button();
-        logout.setText("登出");
-        logout.setOnAction((e) -> {
+        // 查看所有訂單
+        Button allOrder = new Button();
+        allOrder.setText("所有訂單");
+        allOrder.setOnAction((e) -> {
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-            GlobalVariables.now_user = "";
             GlobalUIObject.LOGIN.goToLogin(stage);
+            stage.setScene(GlobalUIObject.ORDER.setOrder());
+            stage.show();
         });
 
         // 購物車
@@ -116,11 +133,19 @@ public class Index {
             GlobalUIObject.LOGIN.goToLogin(stage);
             GlobalUIObject.SelectAll_inCartList.setSelected(false);
             GlobalUIObject.CART.setInCartList();
-            stage.setScene(GlobalUIObject.CartScene);
+            stage.setScene(GlobalUIObject.CART.setCartScene());
             stage.show();
         });
+        
+        Button logout = new Button();
+        logout.setText("登出");
+        logout.setOnAction((e) -> {
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            GlobalVariables.now_user = "";
+            GlobalUIObject.LOGIN.goToLogin(stage);
+        });
 
-        header.getChildren().addAll(all_button, category2L_Pane, filling, this.user_name_Label, logout,goToCart);
+        header.getChildren().addAll(all_button, category2L_Pane, filling, this.user_name_Label, allOrder,goToCart, logout);
     }
 
     /**
@@ -150,6 +175,7 @@ public class Index {
      * 建立 所有 書籍(商品) 的商品清單
      */
     public void setIndexGoodBlock() {
+        IndexGoodBlock.IndexGoodObjectList();
         VBox b = new VBox();
         b.setSpacing(10);
         for (String id : GlobalUIObject.IndexGoodBlock_list.keySet()) {

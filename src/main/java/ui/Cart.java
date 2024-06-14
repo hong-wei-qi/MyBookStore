@@ -8,6 +8,7 @@ import java.util.TreeMap;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -65,6 +66,18 @@ public class Cart {
     }
 
     /**
+     * 設置購物車頁面
+     */
+    public Scene setCartScene() {
+        VBox cartScene = new VBox();
+        cartScene.setSpacing(10);
+        cartScene.setPadding(new Insets(10, 10, 10, 10));
+        cartScene.getStylesheets().add("/css/bootstrap3.css");
+        cartScene.getChildren().addAll(this.header, this.cartList, this.cartInfoBlock);
+        return new Scene(cartScene, 1000, 700);
+    }
+    
+    /**
      * 建立 標頭
      */
     public void setHeader() {
@@ -84,7 +97,7 @@ public class Cart {
         all_button.setOnAction((e) -> {
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             GlobalUIObject.LOGIN.goToLogin(stage);
-            stage.setScene(GlobalUIObject.IndexScene);
+            stage.setScene(GlobalUIObject.INDEX.setIndexScene());
             stage.show();
         });
 
@@ -94,14 +107,6 @@ public class Cart {
 
         // 購物車
         header.getChildren().addAll(all_button, filling, this.user_name_Label);
-
-        // 測試按鈕
-        Button test = new Button();
-        test.setText("show order.");
-        test.setOnAction((e) -> {
-            showOrder();
-        });
-        header.getChildren().add(test);
     }
 
     /**
@@ -237,35 +242,4 @@ public class Cart {
                 GlobalVariables.cart.getTotal()
         ));
     }
-
-    /**
-     * 測試用 展示目前操作用戶的所有訂單
-     */
-    public void showOrder() {
-        System.out.println("\n" + GlobalVariables.now_user + "已成立訂單資訊");
-        var order_list = GlobalVariables.orderDAO.getByUserId(GlobalVariables.now_user);
-        for (String order_id : order_list.keySet()) {
-            if (!(order_list.get(order_id).getUser_id().equals(GlobalVariables.now_user))) {
-                continue;
-            }
-            System.out.println("訂單ID：" + order_list.get(order_id).getOrder_id());
-            System.out.println("總金額：" + order_list.get(order_id).getTotal());
-            System.out.println("修改狀態：" + ((order_list.get(order_id).isAlter()) ? "還可修改" : "不可修改"));
-            System.out.println("訂單明細");
-            var good_order_list = order_list.get(order_id).getList();
-            System.out.println("商品ID | 商品名稱 | 單價 | 數量 | 小計");
-            for (String good_id : good_order_list.keySet()) {
-                System.out.println(String.format("%s | %s | %d | %d | %d",
-                        good_order_list.get(good_id).getGood_id(),
-                        GlobalVariables.productDAO.getById(good_id).getName(),
-                        good_order_list.get(good_id).getPrice(),
-                        good_order_list.get(good_id).getQuantity(),
-                        good_order_list.get(good_id).getSubtotal()
-                ));
-            }
-            System.out.println("==================================================\n");
-        }
-
-    }
-
 }

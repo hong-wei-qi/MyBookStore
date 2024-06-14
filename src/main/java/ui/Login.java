@@ -1,7 +1,9 @@
 package ui;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -10,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import main.GlobalVariables;
+import main.Run;
 
 /**
  * <h2><b>登入 UI介面</b></h2><br>
@@ -63,9 +66,9 @@ public class Login {
             GlobalUIObject.CART.user_name_Label.setText(user_name);
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             if (GlobalVariables.userDAO.permissions(GlobalVariables.now_user)) {
-                stage.setScene(GlobalUIObject.ProductManageScene);
+                stage.setScene(GlobalUIObject.PRODUCT_MANAGE.setProductManage());
             } else {
-                stage.setScene(GlobalUIObject.IndexScene);
+                stage.setScene(GlobalUIObject.INDEX.setIndexScene());
             }
             stage.show();
         });
@@ -82,10 +85,20 @@ public class Login {
     public void goToLogin(Stage stage) {
         if (GlobalVariables.userDAO.getById(GlobalVariables.now_user) == null) {
             GlobalVariables.now_user = "";
-            stage.setScene(GlobalUIObject.LoginScene);
+            stage.setScene(GlobalUIObject.LOGIN.setLoginScene());
             stage.show();
         }
     }
     
-    
+    /**
+     * 登入UI物件介面
+     */
+    public Scene setLoginScene() {
+        VBox loginScene = new VBox();
+        loginScene.setSpacing(10);
+        loginScene.setPadding(new Insets(10, 10, 10, 10));
+        loginScene.getStylesheets().add("/css/bootstrap3.css");
+        loginScene.getChildren().addAll(this.content);
+        return new Scene(loginScene, 450, 250);
+    }
 }

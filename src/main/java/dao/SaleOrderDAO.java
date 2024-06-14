@@ -41,7 +41,8 @@ public class SaleOrderDAO {
                         (result.getInt("amount")),
                         (result.getInt("quantity")),
                         (result.getInt("total")),
-                        (result.getInt("alter"))
+                        (result.getInt("alter")),
+                        (result.getInt("complete"))
                 );
                 order_list.put(o.getOrder_id(), o);
             }
@@ -73,7 +74,8 @@ public class SaleOrderDAO {
                         (result.getInt("amount")),
                         (result.getInt("quantity")),
                         (result.getInt("total")),
-                        (result.getInt("alter"))
+                        (result.getInt("alter")),
+                        (result.getInt("complete"))
                 );
                 order_list.put(o.getOrder_id(), o);
             }
@@ -104,7 +106,8 @@ public class SaleOrderDAO {
                         (result.getInt("amount")),
                         (result.getInt("quantity")),
                         (result.getInt("total")),
-                        (result.getInt("alter"))
+                        (result.getInt("alter")),
+                        (result.getInt("complete"))
                 );
             }
         } catch (SQLException ex) {
@@ -122,7 +125,7 @@ public class SaleOrderDAO {
     public boolean insert(Order order) {
         this.getConn();
         boolean success = false;
-        String query = "INSERT INTO `sale_order` (`order_id`, `user_id`, `amount`, `quantity`, `total`, `alter`) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO `sale_order` (`order_id`, `user_id`, `amount`, `quantity`, `total`, `alter`, `complete`) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement state = conn.prepareStatement(query);
             state.setString(1, order.getOrder_id());
@@ -131,6 +134,7 @@ public class SaleOrderDAO {
             state.setInt(4, order.getQuantity());
             state.setInt(5, order.getTotal());
             state.setInt(6, (order.isAlter()) ? 1 : 0);
+            state.setInt(7, (order.isComplete()) ? 1 : 0);
             success = state.executeUpdate() > 0;
         } catch (SQLException ex) {
             BookStoreDB.exception(CLASS_NAME, "insert(新增訂單)", ex);
@@ -190,7 +194,7 @@ public class SaleOrderDAO {
     public boolean update(Order order) {
         this.getConn();
         boolean success = false;
-        String query = "UPDATE `sale_order` SET `user_id` = ?, `amount` = ?, `quantity` = ?, `total` = ?, `alter` = ? WHERE `order_id` = ?;";
+        String query = "UPDATE `sale_order` SET `user_id` = ?, `amount` = ?, `quantity` = ?, `total` = ?, `alter` = ?, `complete` = ? WHERE `order_id` = ?;";
         try {
             PreparedStatement state = conn.prepareStatement(query);
             state.setString(1, order.getUser_id());
@@ -198,7 +202,8 @@ public class SaleOrderDAO {
             state.setInt(3, order.getQuantity());
             state.setInt(4, order.getTotal());
             state.setInt(5, (order.isAlter()) ? 1 : 0);
-            state.setString(6, order.getOrder_id());
+            state.setInt(6, (order.isComplete()) ? 1 : 0);
+            state.setString(7, order.getOrder_id());
             success = state.executeUpdate() > 0;
         } catch (SQLException ex) {
             BookStoreDB.exception(CLASS_NAME, "update(更新訂單)", ex);

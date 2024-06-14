@@ -28,7 +28,31 @@ public class Order {
     private int total;
     // 修改狀態 true: 允許被修改 || false: 禁止被修改
     private boolean alter;
-
+    // 訂單是否已完成 true: 已完成 || false: 未完成
+    private boolean complete;
+    
+    /**
+     * 初始化 `訂單`
+     *
+     * @param order_id 訂單ID
+     * @param user_id 用戶ID
+     * @param amount 商品項目數量
+     * @param quantity 商品總數量
+     * @param total 訂單總金額
+     * @param alter 修改狀態
+     * @param complete 訂單是否已完成
+     */
+    public Order(String order_id, String user_id, int amount, int quantity, int total, int alter, int complete) {
+        this.order_id = order_id;
+        this.user_id = user_id;
+        this.amount = amount;
+        this.quantity = quantity;
+        this.total = total;
+        this.alter = (alter == 1);
+        this.complete = (complete == 1);
+        this.list = new TreeMap();
+    }
+    
     /**
      * 初始化 `訂單`
      *
@@ -47,6 +71,7 @@ public class Order {
         this.quantity = quantity;
         this.total = total;
         this.alter = true;
+        this.complete = false;
     }
     
     /**
@@ -60,15 +85,15 @@ public class Order {
      * @param total 訂單總金額
      * @param alter 修改狀態
      */
-    public Order(String order_id, String user_id, TreeMap<String, GoodOrder> list, int amount, int quantity, int total, int alter) {
-        this.order_id = order_id;
-        this.user_id = user_id;
-        this.list = list;
-        this.amount = amount;
-        this.quantity = quantity;
-        this.total = total;
-        this.alter = (alter == 1);
-    }
+//    public Order(String order_id, String user_id, TreeMap<String, GoodOrder> list, int amount, int quantity, int total, int alter) {
+//        this.order_id = order_id;
+//        this.user_id = user_id;
+//        this.list = list;
+//        this.amount = amount;
+//        this.quantity = quantity;
+//        this.total = total;
+//        this.alter = (alter == 1);
+//    }
     
     /**
      * 初始化 `訂單`
@@ -80,15 +105,15 @@ public class Order {
      * @param total 訂單總金額
      * @param alter 修改狀態
      */
-    public Order(String order_id, String user_id, int amount, int quantity, int total, int alter) {
-        this.order_id = order_id;
-        this.user_id = user_id;
-        this.amount = amount;
-        this.quantity = quantity;
-        this.total = total;
-        this.alter = (alter == 1);
-        this.list = new TreeMap();
-    }
+//    public Order(String order_id, String user_id, int amount, int quantity, int total, int alter) {
+//        this.order_id = order_id;
+//        this.user_id = user_id;
+//        this.amount = amount;
+//        this.quantity = quantity;
+//        this.total = total;
+//        this.alter = (alter == 1);
+//        this.list = new TreeMap();
+//    }
 
     /**
      * 修改訂單，如果此訂單還未被修改過。
@@ -100,6 +125,9 @@ public class Order {
      * @return 是否修改成功
      */
     public boolean alterOrder(TreeMap<String, GoodOrder> list, int amount, int quantity, int total) {
+        if (this.complete) {
+            return false;
+        }
         if (!this.alter) {
             return false;
         }
@@ -118,6 +146,9 @@ public class Order {
      * @return 是否修改成功
      */
     public boolean alterOrder(TreeMap<String, GoodOrder> list) {
+        if (this.complete) {
+            return false;
+        }
         if (!this.alter) {
             return false;
         }
@@ -131,6 +162,29 @@ public class Order {
         }
         this.alter = false;
         return true;
+    }
+
+    /**
+     * 重新設置訂單是否已完成
+     *
+     * @param complete 訂單是否已完成
+     */
+    public void setComplete(boolean complete) {
+        this.complete = complete;
+    }
+    
+    /**
+     * @return 訂單是否已完成
+     */
+    public boolean isComplete() {
+        return complete;
+    }
+    
+    /**
+     * @return 訂單是否已完成
+     */
+    public String isCompleteString() {
+        return (complete) ? "已完成" : "未完成";
     }
 
     /**
